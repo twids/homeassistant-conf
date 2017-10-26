@@ -39,7 +39,7 @@ camera 1:
 
 http:
   # Uncomment this to add a password (recommended!)
-  api_password: Gangst3r
+  api_password: !secret default_password
   # Uncomment this if you are using SSL or running in Docker etc
   # base_url: example.duckdns.org:8123
   ssl_certificate: /etc/letsencrypt/live/home.widsell.nu/fullchain.pem
@@ -133,7 +133,7 @@ notify:
 
 influxdb:
   username: "hass"
-  password: "aDUsm3kxNP88TXM2"
+  password: !secret influxdb_pw
   database: "db_widsnet"
   default_measurement: state
   exclude:
@@ -145,7 +145,7 @@ influxdb:
 #    host: 192.168.1.1
 #    protocol: telnet
 #    username: admin
-#    password: Gangst3r
+#    password: !secret default_password
 
 panel_iframe:
   grafana:
