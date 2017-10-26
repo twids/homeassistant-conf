@@ -23,6 +23,9 @@ pyozw.sqlite
 secrets.yaml
 tradfri.conf
 
+#zwave ??
+zwcfg_*.xml
+
 # Temporary files
 *.db-journal
 *.pid
