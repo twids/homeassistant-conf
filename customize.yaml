@@ -1,0 +1,21 @@
+zwave.domux_unknown_type8007_id1000:
+  friendly_name: Temp/Humidity Sensor
+automation.bevattning:
+  initial_state: 'off'
+sensor.neo_coolcam_power_plug_12a_alarm_level:
+  hidden: true
+sensor.neo_coolcam_power_plug_12a_alarm_type:
+  hidden: true
+zwave.neo_coolcam_power_plug_12a:
+  friendly_name: Server Plug
+switch.neo_coolcam_power_plug_12a_switch:
+  friendly_name: Server Switch
+  hidden: true
+sensor.neo_coolcam_power_plug_12a_sourcenodeid:
+  hidden: true
+sensor.neo_coolcam_power_plug_12a_exporting:
+  hidden: true
+sensor.neo_coolcam_power_plug_12a_power_management:
+  hidden: true
+
+    

@@ -1,0 +1,157 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 59.2618127
+  longitude: 18.0431841
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 11
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Stockholm
+  
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+logger:
+
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
+
+#camera:
+#  - platform: onvif
+#    host: 192.168.1.153
+#    port: 10554
+
+camera 1:
+  - platform: ffmpeg
+    ffmpeg_bin: /usr/bin/ffmpeg
+    name: Camera
+    input: -rtsp_transport tcp -i rtsp://192.168.1.153:10554/tcp/av0_0
+    extra_arguments: -pred 1 -q:v 2
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: Gangst3r
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+  ssl_certificate: /etc/letsencrypt/live/home.widsell.nu/fullchain.pem
+  ssl_key: /etc/letsencrypt/live/home.widsell.nu/privkey.pem
+  base_url: home.widsell.nu
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+media_player:
+  - platform: webostv
+    host: 192.168.1.92
+    mac: C8:08:E9:8E:43:D6
+
+# Weather Prediction
+sensor:
+  - platform: yr
+
+  - platform: dht
+    sensor: DHT22
+    pin: 4
+    monitored_conditions:
+      - temperature
+      - humidity
+
+  - platform: miflora
+    name: Fikus
+    mac: C4:7C:8D:65:57:8D
+    median: 3
+    monitored_conditions:
+      - temperature
+      - light
+      - moisture
+      - conductivity
+      - battery
+
+# 433mhz
+switch:
+  - platform: rpi_rf
+    gpio: 5
+    switches:
+      balcony_light:
+        pulselength: 410
+        code_on: 2814979
+        code_off: 2814977
+
+# Text to speech
+tts:
+  platform: google
+  language: 'sv'
+
+tradfri:
+  host: 192.168.1.252
+  api_key: 46WXFSI3dAN7UwxQ
+
+vera:
+  vera_controller_url: http://192.168.1.127:3480/
+
+zwave:
+  usb_path: /dev/ttyUSB-zwave
+  network_key: "0x54,0xBC,0xBA,0xA2,0x2C,0xE3,0x08,0x93,0x00,0x47,0x28,0xD8,0xB7,0x9D,0x66,0x43"
+
+notify:
+  - platform: pushbullet
+    name: pushbullet
+    api_key: o.IrUpL7RBwALWWf0axjkjb4uZLDAJjKZE
+
+  - name: html5
+    platform: html5
+    gcm_api_key: 'AAAAutnjaPk:APA91bEj3RCns7KJSytQvrcv4t5Uwjpr8U9whcvscIdrXiI_ziUkP8nEccD13JTK7B_3QM_fBVBHzStuY0qKSOWvMb1ekRbJx9BeXWKTbhSCDDSoFbzhhfDjy5NhK59Od2wf6h22v8-P'
+    gcm_sender_id: '802519476473'
+
+influxdb:
+  username: "hass"
+  password: "aDUsm3kxNP88TXM2"
+  database: "db_widsnet"
+  default_measurement: state
+  exclude:
+    domains:
+       - automation
+
+#device_tracker:
+#  - platform: asuswrt
+#    host: 192.168.1.1
+#    protocol: telnet
+#    username: admin
+#    password: Gangst3r
+
+panel_iframe:
+  grafana:
+    title: 'Grafana'
+    icon: 'mdi:chart-bar'
+    url: 'https://home.widsell.nu:3000/dashboard/snapshot/ZQD6aLF2zg92iNozW3j73rUZoHcK9pa6'
+
+group: !include groups.yaml
+automation: !include automations.yaml

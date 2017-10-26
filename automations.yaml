@@ -1,0 +1,115 @@
+- id: tvmobelON
+  alias: "TV-M\xF6bel P\xC5 (solnedg\xE5ng)"
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:30:00
+  action:
+  - service: light.turn_on
+    entity_id: light.tvmobel
+
+- id: tvmobelOFF
+  alias: "TV-M\xF6bel AV (soluppg\xE5ng)"
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 01:00:00
+  action:
+  - service: light.turn_off
+    entity_id: light.tvmobel
+
+- id: badrumAmpON
+  alias: "Starta f\xF6rst\xE4rkare i badrum"
+  trigger:
+  - entity_id: media_player.badrum
+    platform: state
+    to: playing
+  - entity_id: media_player.hemgrupp
+    platform: state
+    to: playing
+  action:
+  - entity_id: switch.forstarkare_42
+    service: switch.turn_on
+
+- id: badrumAmpOFF
+  alias: "St\xE4ng av f\xF6rst\xE4rkare i badrum"
+  trigger:
+  - platform: state
+    entity_id: media_player.badrum
+    from: playing
+  - platform: state
+    entity_id: media_player.hemgrupp
+    from: playing
+  action:
+  - service: switch.turn_off
+    entity_id: switch.forstarkare_42
+
+- id: vattenpumpsnotifiering
+  alias: Notifiering Vattenpump
+  trigger:
+  - entity_id: switch.vattenpump_94
+    platform: state
+  action:
+  - data:
+      message: Vattenpump {{ states.switch.vattenpump_94.state  }}
+    service: notify.pushbullet
+
+- id: Home Assistant Update Notification
+  alias: Update Notification
+  trigger:
+  - platform: state
+    entity_id: updater.updater
+  action:
+  - service: notify.pushbullet
+    data:
+      message: There is a new Home Assistant release available
+
+- id: handdukstork on Weekdays
+  alias: Handdukstork på Vardagar
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: switch.turn_on
+    entity_id: switch.handdukstork_49
+
+- id: handduktstork off (2h)
+  alias: Handdukstork avstängning (2 timmar)
+  trigger:
+  - entity_id: switch.handdukstork_49
+    platform: state
+    to: 'on'
+    for:
+      hours: 2
+  action:
+  - service: switch.turn_off
+    entity_id: switch.handdukstork_49
+
+- id: Bevattning
+  alias: Bevattning
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  action:
+  - service: switch.turn_on
+    entity_id: switch.vattenpump_94
+
+- id: Bevattning Auto Off
+  alias: Bevattning Automatisk Avstängning
+  trigger:
+  - entity_id: switch.vattenpump_94
+    platform: state
+    to: 'on'
+    for:
+      minutes: 5
+  action:
+  - service: switch.turn_off
+    entity_id: switch.vattenpump_94

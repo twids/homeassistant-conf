@@ -1,0 +1,19 @@
+#Remove lots of unnecessary coolcam stuff
+"sensor.neo_coolcam_*_power_management":
+  hidden: true
+"sensor.neo_coolcam_*_exporting":
+  hidden: true
+"sensor.neo_coolcam_*_sourcenodeid":
+  hidden: true
+"sensor.neo_coolcam_*_interval*":
+  hidden: true
+"sensor.neo_coolcam_*_sourcenodeid":
+  hidden: true
+"sensor.neo_coolcam_*_previous_reading*":
+  hidden: true
+
+
+"configuration.plex_*":
+  hidden: true
+"configurator.ikea_tradfri":
+  hidden: true
