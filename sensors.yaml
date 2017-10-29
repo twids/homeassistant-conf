@@ -1,0 +1,32 @@
+- platform: yr
+
+- platform: dht
+  sensor: DHT22
+  pin: 4
+  monitored_conditions:
+    - temperature
+    - humidity
+
+- platform: miflora
+  name: Fikus
+  mac: C4:7C:8D:65:57:8D
+  median: 3
+  monitored_conditions:
+    - temperature
+    - light
+    - moisture
+    - conductivity
+    - battery
+
+- platform: statistics
+  name: Temp/Humidity Bathroom Sensor Stats
+  entity_id: sensor.temphumidity_bathroom_sensor_relative_humidity
+  sampling_size: 3
+
+- platform: template
+  sensors:
+    bathroom_humidity_delta:
+      friendly_name: "Bathroom Humidity Delta"
+      value_template: "{{ states.sensor.temphumidity_bathroom_sensor_stats_mean.attributes.max_value | float - states.sensor.temphumidity_bathroom_sensor_stats_mean.attributes.min_value | float }}"
+      entity_id: sensor.temphumidity_bathroom_sensor_stats_mean
+      unit_of_measurement: "Δ"

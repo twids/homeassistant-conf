@@ -113,3 +113,19 @@
   action:
   - service: switch.turn_off
     entity_id: switch.vattenpump_94
+
+- id: Handdukstork Auto On
+  alias: Handdukstork Auto På (Luftfuktighet)
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.bathroom_humidity_delta
+      above: 15
+  action:
+  - service: switch.turn_on
+    entity_id: switch.handdukstork_49
+  - service: notify.html5
+    data_template:
+      message: Handdukstork {{ states.switch.handdukstork_49.state  }}
+    data:
+      data:
+        tag: 'handdukstork_on'

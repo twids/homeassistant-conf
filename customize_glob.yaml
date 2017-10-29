@@ -1,15 +1,15 @@
 #Remove lots of unnecessary coolcam stuff
-"sensor.neo_coolcam_*_power_management":
+"sensor.*_power_management":
   hidden: true
-"sensor.neo_coolcam_*_exporting":
+"sensor.*_exporting":
   hidden: true
-"sensor.neo_coolcam_*_sourcenodeid":
+"sensor.*_sourcenodeid":
   hidden: true
-"sensor.neo_coolcam_*_interval*":
+"sensor.*_interval*":
   hidden: true
-"sensor.neo_coolcam_*_sourcenodeid":
+"sensor.*_sourcenodeid":
   hidden: true
-"sensor.neo_coolcam_*_previous_reading*":
+"sensor.*_previous_reading*":
   hidden: true
 
 

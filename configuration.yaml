@@ -74,26 +74,7 @@ media_player:
     mac: C8:08:E9:8E:43:D6
 
 # Weather Prediction
-sensor:
-  - platform: yr
-
-  - platform: dht
-    sensor: DHT22
-    pin: 4
-    monitored_conditions:
-      - temperature
-      - humidity
-
-  - platform: miflora
-    name: Fikus
-    mac: C4:7C:8D:65:57:8D
-    median: 3
-    monitored_conditions:
-      - temperature
-      - light
-      - moisture
-      - conductivity
-      - battery
+sensor: !include sensors.yaml
 
 # 433mhz
 switch:
@@ -147,11 +128,18 @@ influxdb:
 #    username: admin
 #    password: !secret default_password
 
+mqtt:
+  broker: localhost
+  port: 8883
+  username: homeassistant
+  password: !secret mosquitto
+
+
 panel_iframe:
   grafana:
     title: 'Grafana'
     icon: 'mdi:chart-bar'
-    url: 'https://home.widsell.nu:3000/dashboard/snapshot/ZQD6aLF2zg92iNozW3j73rUZoHcK9pa6'
+    url: 'https://home.widsell.nu:3000/dashboard/db/home-assistant?orgId=1'
 
 group: !include groups.yaml
 automation: !include automations.yaml
