@@ -1,4 +1,4 @@
-#Remove lots of unnecessary coolcam stuff
+#Remove lots of unnecessary coolcam & z-wave stuff
 "sensor.*_power_management":
   hidden: true
 "sensor.*_exporting":
@@ -12,7 +12,12 @@
 "sensor.*_previous_reading*":
   hidden: true
 
+"sensor.*_alarm_level*":
+  hidden: true
+"sensor.*_alarm_type*":
+  hidden: true
 
+#Configurators
 "configuration.plex_*":
   hidden: true
 "configurator.ikea_tradfri":
