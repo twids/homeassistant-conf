@@ -7,8 +7,6 @@
   hidden: true
 "sensor.*_interval*":
   hidden: true
-"sensor.*_sourcenodeid":
-  hidden: true
 "sensor.*_previous_reading*":
   hidden: true
 
@@ -20,5 +18,5 @@
 #Configurators
 "configuration.plex_*":
   hidden: true
-"configurator.ikea_tradfri":
-  hidden: true
+#"configurator.ikea_tradfri":
+#  hidden: true
