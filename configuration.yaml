@@ -20,6 +20,12 @@ frontend:
 # Enables configuration UI
 config:
 
+
+recorder:
+  purge_interval: 1
+  purge_keep_days: 30
+  db_url: !secret mssqldb_url
+
 logger:
   default: warning
 
@@ -46,6 +52,8 @@ http:
   ssl_certificate: /etc/letsencrypt/live/home.widsell.nu/fullchain.pem
   ssl_key: /etc/letsencrypt/live/home.widsell.nu/privkey.pem
   base_url: home.widsell.nu
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -112,21 +120,13 @@ notify:
     gcm_api_key: 'AAAAutnjaPk:APA91bEj3RCns7KJSytQvrcv4t5Uwjpr8U9whcvscIdrXiI_ziUkP8nEccD13JTK7B_3QM_fBVBHzStuY0qKSOWvMb1ekRbJx9BeXWKTbhSCDDSoFbzhhfDjy5NhK59Od2wf6h22v8-P'
     gcm_sender_id: '802519476473'
 
-influxdb:
-  username: "hass"
-  password: !secret influxdb_pw
-  database: "db_widsnet"
-  default_measurement: state
-  exclude:
-    domains:
-       - automation
-
-#device_tracker:
-#  - platform: asuswrt
-#    host: 192.168.1.1
-#    protocol: telnet
-#    username: admin
-#    password: !secret default_password
+device_tracker:
+  - platform: owntracks_http
+  - platform: asuswrt
+    host: 192.168.1.1
+    protocol: telnet
+    username: admin
+    password: !secret default_password
 
 mqtt:
   broker: localhost
@@ -134,12 +134,26 @@ mqtt:
   username: homeassistant
   password: !secret mosquitto
 
+#light:
+#  platform: hue
+#  host: 192.168.1.171
 
 panel_iframe:
   grafana:
     title: 'Grafana'
     icon: 'mdi:chart-bar'
     url: 'https://home.widsell.nu:3000/dashboard/db/home-assistant?orgId=1'
+
+influxdb:
+  username: "hass"
+  host: 192.168.1.10
+  password: !secret influxdb_pw
+  max_retries: 3
+  database: "db_widsnet"
+  default_measurement: state
+  exclude:
+    domains:
+       - automation
 
 group: !include groups.yaml
 automation: !include automations.yaml

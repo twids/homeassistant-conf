@@ -1,11 +1,11 @@
 - platform: yr
 
-- platform: dht
-  sensor: DHT22
-  pin: 4
-  monitored_conditions:
-    - temperature
-    - humidity
+#- platform: dht
+#  sensor: DHT22
+#  pin: 4
+#  monitored_conditions:
+#    - temperature
+#    - humidity
 
 - platform: miflora
   name: Fikus
@@ -27,6 +27,6 @@
   sensors:
     bathroom_humidity_delta:
       friendly_name: "Bathroom Humidity Delta"
-      value_template: "{{ states.sensor.temphumidity_bathroom_sensor_stats_mean.attributes.max_value | float - states.sensor.temphumidity_bathroom_sensor_stats_mean.attributes.min_value | float }}"
+      value_template: "{{ states.sensor.temphumidity_bathroom_sensor_stats_mean.attributes.change | float }}"
       entity_id: sensor.temphumidity_bathroom_sensor_stats_mean
       unit_of_measurement: "Δ"

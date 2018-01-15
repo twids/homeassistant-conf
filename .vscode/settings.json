@@ -1,0 +1,12 @@
+{
+    "logViewer.watch": [
+        {
+            "title": "Home Assistant",
+            "pattern": "Z:\\home-assistant.log"
+        },
+        {
+            "title": "Z-Wave Log",
+            "pattern": "Z:\\OZW_Log.txt"
+        }
+    ],
+}
